@@ -3,7 +3,7 @@ _G.autostart = true
 _G.autohatch = flase
 _G.Autoopen = flase
 _G.antiafk = flase
-_G.autorebirth = flase
+_G.autorebirth = true
 
 
 
