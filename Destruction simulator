@@ -1,0 +1,50 @@
+_G.coins = true
+_G.inflvl = true
+_G.Coinsboost = true
+_G.xpboost = flase --not finish 
+
+spawn(function()
+while _G.coins == true do
+local args = {
+    [1] = "Coins",
+    [2] = 480,
+    [3] = 10000000
+}
+
+game:GetService("ReplicatedStorage").Remotes.generateBoost:FireServer(unpack(args))
+wait()
+end
+end)
+
+spawn(function()
+while _G.inflvl == true do
+local args = {
+    [1] = "Levels",
+    [2] = 480,
+    [3] = 10
+}
+
+game:GetService("ReplicatedStorage").Remotes.generateBoost:FireServer(unpack(args))
+local args = {
+    [1] = "Levels",
+    [2] = 480,
+    [3] = 10
+}
+
+game:GetService("ReplicatedStorage").Remotes.generateBoost:FireServer(unpack(args))
+
+wait()
+end
+end)
+
+spawn(function()
+while _G.Coinsboost == true do
+local args = {
+    [1] = "CoinBoost",
+    [2] = 9999999999
+}
+
+game:GetService("ReplicatedStorage").Remotes.generateBoost:FireServer(unpack(args))
+wait()
+end
+end)
