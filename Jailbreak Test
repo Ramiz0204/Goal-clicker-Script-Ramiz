@@ -64,7 +64,7 @@ local PlayerDropdown = MainTab:CreateDropdown({
 local RefreshButton = MainTab:CreateButton({
    Name = "Refresh Player List",
    Callback = function()
-      -- Get the current players
+      -- Get the current players from Players service
       local playerNames = {}
       for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
          table.insert(playerNames, player.Name)
