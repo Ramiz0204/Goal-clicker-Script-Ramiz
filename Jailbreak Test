@@ -41,6 +41,7 @@ local Players = game:GetService("Players")
 		}
 	 })
 
+-- Main Tab Creation
 local MainTab = Window:CreateTab("🏠 Home", nil) -- Title, Image
 local MainSection = MainTab:CreateSection("Spectating")
 
@@ -69,10 +70,9 @@ local RefreshButton = MainTab:CreateButton({
          table.insert(playerNames, player.Name)
       end
 
-      -- Only set options if playerNames is not empty
+      -- Update the dropdown options only if the player list is not empty
       if #playerNames > 0 then
-         -- Update the dropdown options
-         PlayerDropdown:SetOptions(playerNames)
+         PlayerDropdown:SetOptions(playerNames) -- Set new options in the dropdown
          print("Player list refreshed!")
       else
          print("No players in the game.")
@@ -81,4 +81,13 @@ local RefreshButton = MainTab:CreateButton({
 })
 
 -- Initial population of the player list (automatically refresh the list)
-RefreshButton.Callback()
+local function refreshPlayerList()
+    local playerNames = {}
+    for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+        table.insert(playerNames, player.Name)
+    end
+    PlayerDropdown:SetOptions(playerNames)
+end
+
+-- Refresh the player list on script execution
+refreshPlayerList()
