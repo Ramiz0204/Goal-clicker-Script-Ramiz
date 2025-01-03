@@ -69,7 +69,8 @@ Tab:AddButton({
 -- Functionality to handle spectating
 local isSpectating = false -- To keep track of the toggle state
 
-Tab:AddToggle({
+-- Add the spectate toggle checkbox
+local SpectateToggle = Tab:AddToggle({
     Name = "Spectate Selected Player",
     Default = false,
     Callback = function(Value)
@@ -101,4 +102,3 @@ refreshPlayerList()
 
 -- Initialize the UI
 OrionLib:Init()
-
