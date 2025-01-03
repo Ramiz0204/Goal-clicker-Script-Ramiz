@@ -36,18 +36,18 @@ local MainTab = Window:CreateTab("🏠 Home", nil) -- Title, Image
 local MainSection = MainTab:CreateSection("Spectating")
 
 -- Placeholder for PlayerDropdown
-local PlayerDropdown
+local PlayerDropdown = nil
 
--- Function to refresh the player list and recreate the dropdown
+-- Function to refresh the player list
 local function refreshPlayerList()
     local playerNames = {}
     for _, player in ipairs(Players:GetPlayers()) do
         table.insert(playerNames, player.Name)
     end
 
-    -- Remove the old dropdown if it exists
+    -- Destroy the old dropdown if it exists
     if PlayerDropdown then
-        PlayerDropdown:Destroy() -- Destroy the previous dropdown
+        PlayerDropdown:Destroy()
     end
 
     -- Create a new dropdown with updated player list
@@ -58,17 +58,16 @@ local function refreshPlayerList()
         MultipleOptions = false,
         Flag = "PlayerListDropdown", -- Unique flag for the dropdown
         Callback = function(selectedOption)
-            if selectedOption[1] then
-                print("Selected player:", selectedOption[1])
+            if selectedOption then
+                print("Selected player:", selectedOption)
                 -- Add logic for what happens when a player is selected
             end
         end,
     })
-
     print("Player list refreshed!")
 end
 
--- Create the Refresh Button to refresh the player list
+-- Create the Refresh Button
 local RefreshButton = MainTab:CreateButton({
     Name = "Refresh Player List",
     Callback = refreshPlayerList,
