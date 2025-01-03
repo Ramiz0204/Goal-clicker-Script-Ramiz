@@ -1,4 +1,7 @@
 local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local Camera = Workspace.Camera
+local LocalPlayer = Players.LocalPlayer
 
 -- Load OrionLib
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
@@ -17,22 +20,24 @@ local Tab = Window:MakeTab({
     PremiumOnly = false
 })
 
--- Add a section for player list
+-- Add a section for player controls
 local Section = Tab:AddSection({
     Name = "Player List Management"
 })
 
 -- Placeholder for player list
 local playerNames = {}
+local selectedPlayer = nil -- To keep track of the selected player
 
--- Create the dropdown with placeholder options
+-- Create the dropdown for player selection
 local PlayerDropdown
 PlayerDropdown = Tab:AddDropdown({
     Name = "Player List",
     Default = "Select a Player",
     Options = {"Loading..."},
     Callback = function(Value)
-        print("Selected player:", Value)
+        selectedPlayer = Value
+        print("Selected player:", selectedPlayer)
     end
 })
 
@@ -59,6 +64,36 @@ Tab:AddButton({
         refreshPlayerList()
         print("Player list refreshed!")
     end    
+})
+
+-- Functionality to handle spectating
+local isSpectating = false -- To keep track of the toggle state
+
+Tab:AddToggle({
+    Name = "Spectate Selected Player",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            -- Start spectating the selected player
+            if selectedPlayer and selectedPlayer ~= LocalPlayer.Name then
+                local targetPlayer = Players:FindFirstChild(selectedPlayer)
+                if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
+                    Camera.CameraSubject = targetPlayer.Character.Humanoid
+                    isSpectating = true
+                    print("Spectating:", selectedPlayer)
+                else
+                    print("Player not found or invalid.")
+                end
+            else
+                print("Please select a valid player to spectate.")
+            end
+        else
+            -- Stop spectating and reset to the local player
+            Camera.CameraSubject = LocalPlayer.Character.Humanoid
+            isSpectating = false
+            print("Stopped spectating.")
+        end
+    end
 })
 
 -- Populate the initial player list
