@@ -14,7 +14,6 @@ local Window = OrionLib:MakeWindow({
 -- Create a tab
 local Tab = Window:MakeTab({
     Name = "Player Controls",
-    Icon = "", -- Remove this line or provide a valid icon ID
     PremiumOnly = false
 })
 
