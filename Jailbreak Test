@@ -23,8 +23,7 @@ local Section = Tab:AddSection({
     Name = "Player List Management"
 })
 
--- Placeholder for the dropdown to display players
-local PlayerDropdown = nil
+-- Placeholder for player list and selected player
 local playerNames = {}
 
 -- Function to refresh the player list
@@ -34,18 +33,26 @@ local function refreshPlayerList()
         table.insert(playerNames, player.Name)
     end
 
-    -- Update the dropdown if players exist
+    -- If no players are found, provide a fallback
+    if #playerNames == 0 then
+        playerNames = {"No Players Found"}
+    end
+
+    -- Update the dropdown with the refreshed player list
     if PlayerDropdown then
-        Tab:AddDropdown({
-            Name = "Player List",
-            Default = playerNames[1] or "No Players",
-            Options = playerNames,
-            Callback = function(Value)
-                print("Selected player:", Value)
-            end
-        })
+        PlayerDropdown:Refresh(playerNames, playerNames[1])
     end
 end
+
+-- Create the dropdown
+local PlayerDropdown = Tab:AddDropdown({
+    Name = "Player List",
+    Default = "No Players Found",
+    Options = {"No Players Found"},
+    Callback = function(Value)
+        print("Selected player:", Value)
+    end
+})
 
 -- Add a button to refresh the player list
 Tab:AddButton({
