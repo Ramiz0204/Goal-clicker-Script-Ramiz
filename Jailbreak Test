@@ -2,7 +2,7 @@ local Players = game:GetService("Players")
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
-    Name = "Jailbreak ",
+    Name = "Jailbreak",
     Icon = 0,
     LoadingTitle = "JB Stalker",
     LoadingSubtitle = "by zcp0",
@@ -35,8 +35,8 @@ local Window = Rayfield:CreateWindow({
 local MainTab = Window:CreateTab("🏠 Home", nil) -- Title, Image
 local MainSection = MainTab:CreateSection("Spectating")
 
--- Placeholder for PlayerDropdown
-local PlayerDropdown = nil
+-- Label to display the player list
+local PlayerListLabel = MainTab:CreateLabel("Player List:\nLoading...")
 
 -- Function to refresh the player list
 local function refreshPlayerList()
@@ -45,25 +45,13 @@ local function refreshPlayerList()
         table.insert(playerNames, player.Name)
     end
 
-    -- Destroy the old dropdown if it exists
-    if PlayerDropdown then
-        PlayerDropdown:Destroy()
+    -- Update the label with the refreshed player list
+    if #playerNames > 0 then
+        PlayerListLabel:Set("Player List:\n" .. table.concat(playerNames, "\n"))
+    else
+        PlayerListLabel:Set("Player List:\nNo players in the game.")
     end
 
-    -- Create a new dropdown with updated player list
-    PlayerDropdown = MainTab:CreateDropdown({
-        Name = "Player List",
-        Options = playerNames, -- Updated list of player names
-        CurrentOption = {}, -- No selection initially
-        MultipleOptions = false,
-        Flag = "PlayerListDropdown", -- Unique flag for the dropdown
-        Callback = function(selectedOption)
-            if selectedOption then
-                print("Selected player:", selectedOption)
-                -- Add logic for what happens when a player is selected
-            end
-        end,
-    })
     print("Player list refreshed!")
 end
 
